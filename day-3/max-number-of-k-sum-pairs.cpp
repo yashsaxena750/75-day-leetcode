@@ -1,39 +1,35 @@
 #include "iostream"
 #include "vector"
+#include <bits/stdc++.h>
+
 using namespace std;
 
 class Solution {
 public:
     static int maxOperations(vector<int>& nums, int k) {
         
-        int n = nums.size();// 3 1 4 3
+        std::sort(nums.begin(),nums.end());
+        int n = nums.size();
+        int fp = 0;
+        int sp = n-1;
         int opc = 0;
-        int i = 0;
-        
-        while(i<nums.size())
+
+        while(fp<sp)
         {
-            int j = i+1;
-            int flag = 0;
-
-            while(j<nums.size())
+            if(nums.at(fp)+nums.at(sp)==k)
             {
-                if(nums.at(i)+nums.at(j)==k)
-                {
-                    opc++;
-                    nums.erase(nums.begin() + j);
-                    nums.resize(nums.size());
-                    i++;
-                    flag = 1;
-                    break;
-                }
-                else
-                {
-                    j++;
-                }                
+                fp++;
+                sp--;
+                opc++;
             }
-
-            if(!flag)
-                i++;
+            else if(nums.at(fp)+nums.at(sp)<k)
+            {
+                fp++;//2
+            }
+            else
+            {
+                sp--;//4
+            }
         }
 
         return opc;
